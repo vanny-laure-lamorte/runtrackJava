@@ -1,8 +1,12 @@
+
+
+package job00;
+
 public class AbstractFinal {
     public static void main(String[] args) {
 
     // A a = new A(); // On ne peut pas instancier une classe abstraite
-    B b = new B();
+    // B b = new B();
    // C c = new C(); // On ne peut pas instancier une classe abstraite
     D d = new D();
     d.m2();
