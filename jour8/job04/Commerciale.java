@@ -5,11 +5,14 @@ import java.util.Scanner;
 
 public class Commerciale {
 
-       // Attributs
+       // Attributs privés
        private Vector<Article> articles;
        private Vector<Client> clients;
        private Vector<Commande> commandes;
        private Vector<Ligne> lignes;
+
+       // Attribut publics
+       public Scanner input = new Scanner(System.in);
 
        public static void main(String[] args) {
         afficherMenu();
@@ -24,38 +27,74 @@ public class Commerciale {
            }
 
         // Méthode pour passer une commande
-        public void passerCommande(Commande c) {
-            commandes.add(c);
+        public void passerCommande() {
+            commandes.add();
+            System.out.println("Commande passée avec succès !");
         }
 
         // Méthode pour annuler une commande
-        public void annulerCommande(Commande c) {
-            commandes.remove(c);
+        public void annulerCommande() {
+            commandes.remove();
+            System.out.println("Votre commande est annulée!");
         }
 
         // Méthode pour ajouter un article
-        public void ajouterArticle(Article a) {
-            articles.add(a);
+        public void ajouterArticle() {
+    
+            System.out.println("> Saisir une référence de l'article: ");
+            int ajoutRef = input.nextInt();
+            System.out.println("> Saisir le nom de l'article: ");
+            String ajoutDesignation = input.nextLine();
+            System.out.println("> Saisir le prix unitaire de l'article: ");
+            double ajoutPrixUnitaire = input.nextDouble();
+            System.out.println("> Saisir la quantité de stock: ");
+            int ajoutQuantiteStock = input.nextInt();
+        
+            articles.add(new Article(ajoutRef, ajoutDesignation, ajoutPrixUnitaire, ajoutQuantiteStock));           
+
+            System.out.println("Article ajouté avec succès !");
         }
 
         // Méthode pour supprimer un article
-        public void supprimerArticle(Article a) {
-            articles.remove(a);
+        public void supprimerArticle() {
+
+            System.out.print("> Donnez la référence pour supprimer votre article : ");
+
+            System.out.println("Article supprimé avec succès !");
         }
 
         // Méthode pour ajouter un article
-        public void ajouterClient(Client c) {
-            clients.add(c);
+        public void ajouterClient() {
+            System.out.println(" > Saisir votre identifiant : ");
+            int ajoutIdentite = input.nextInt();
+            System.out.println(" > Saisir votre nom : ");
+            String ajoutNomSocial = input.nextLine();
+            System.out.println(" > Saisir votre adresse : ");
+            String ajoutAdresse = input.nextLine();
+            System.out.println(" > Saisir votre chiffre d'affaire : ");
+            double ajoutChiffreAffaire = input.nextDouble();
+
+            clients.add(new Client(ajoutIdentite, ajoutNomSocial, ajoutAdresse, ajoutChiffreAffaire));
+
+            System.out.println("Client ajouté avec succès !");
         }
 
         // Méthode pour supprimer un client
-        public void supprimerClient(Client c) {
-            clients.remove(c);
+        public void supprimerClient() {
+
+            System.out.print("> Identité du client à supprimer : ");
+            String supClient = input.nextLine();
+
+            clients.remove( );
+
+            System.out.println("Client supprimé avec succès !");
         }
 
         public static void afficherMenu() {
-                int userChoice; 
-                String userChoiceStr;
+
+            int userChoice; 
+            String userChoiceStr;
+
             Scanner input = new Scanner(System.in); 
             //int choixMenu = 0; 
 
@@ -85,7 +124,7 @@ public class Commerciale {
                         userChoice = Integer.parseInt(userChoiceStr);
                     } else {
                         userChoice = -1;
-                        System.out.println("ERREUR. Veillez entrez uniquement un chiffre entre 1 et 7."); 
+                        System.out.println("Choix INVALIDE. Veillez entrez uniquement un chiffre entre 1 et 7."); 
                         System.out.println();                                          
                     }
                 } while (userChoice < 0 || userChoice > 6);        
@@ -93,39 +132,40 @@ public class Commerciale {
                 // Afficher le choix de l'utilisateur
                 System.out.println("> Vous avez choisi l'option " + userChoice +".");
 
+                Commerciale gestion = new Commerciale();
 
+                // Utilisaton du switch pour que l'utilisateur puisse choisir entre 7 options du menu
+                switch (userChoice) {
+                    case 1:
+                    
+                        gestion.ajouterArticle();
 
-                
+                        break;
+                    case 2:
+                        gestion.supprimerArticle();
+
+                        break;
+                    case 3:
+                        gestion.ajouterClient();
+                        break;
+                    case 4:
+                        gestion.supprimerClient();
+
+                        break;
+                    case 5:
+                        gestion.passerCommande();
+                        break;
+                    case 6:
+                        gestion.annulerCommande();
+                        break;
+                    case 7:
+                        System.out.println("A bitentot ! Fin du programme.");
+                        break;
+
+                    default:
+                        System.out.println("Choix invalide. Veuillez entrer un nombre entre 1 et 7.");
+                }               
 
             input.close();
-        }
-
-   
-   /* public static void main(String[] args) {
-
-        Client client1 = new Client(1, "Lazlo Atlas Ltd", "1 rue du Nouvel An", 1002412.1995);
-        client1.affiche();
-
-        Article article1 = new Article(608, "Livre", 5.45, 50);
-        article1.affiche();
-    
-        // Utilisation du constructeur par copie
-        Article article2 = new Article(article1); 
-        article2.setReference(700); 
-        article2.setDesignation("Journal");
-        article2.setPrixUnitaire(3.5);
-        article2.setQuantiteStock(100);
-        article2.affiche();
-
-        // Commande 1
-        Commande commande1 = new Commande(10,20240704, client1);
-        commande1.affiche();
-
-        // Ligne
-        Ligne ligne1 = new Ligne(commande1, article2, 5);        
-        ligne1.affiche();
-
-} */
-
-
+        }   
 }
