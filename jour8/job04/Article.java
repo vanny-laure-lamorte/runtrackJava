@@ -63,6 +63,7 @@ public class Article {
     }
 
     public void affiche(){
+        System.out.println("--- Article ---");
         System.out.println("> Référence : " + reference);
         System.out.println("> Designation : " + designation);
         System.out.println("> Prix Unitaire : " + prixUnitaire);

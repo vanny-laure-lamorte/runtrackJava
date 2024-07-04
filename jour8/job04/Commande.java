@@ -39,5 +39,12 @@ public class Commande {
     public void setClient(Client client) {
         this.client = client;
     } 
+
+    public void affiche() {
+        System.out.println("--- Commande ---");
+        System.out.println("> Numero de commande: " + numeroCommande);
+        System.out.println("> Date de commande: " + dateCommande);
+        System.out.println();
+    }
     
 }
