@@ -26,7 +26,9 @@ public class Client extends Personne {
     @Override
     protected void affiche() {
         super.affiche();       
-        System.out.println("Chiffre d'affaire : " + chiffreAffaire);
+        System.out.println(" > Chiffre d'affaire : " + chiffreAffaire);
+        System.out.println();
+        
     }
     
 }

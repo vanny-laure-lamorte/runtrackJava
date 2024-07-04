@@ -16,11 +16,9 @@ abstract class Personne {
 
     // Méthode pour afficher les informations
     protected void affiche(){
-        System.out.println("--- PERSONNE ---");
         System.out.println(" > Identité : " + identite);
         System.out.println(" > Nom : " + nomSocial);
         System.out.println(" > Adresse : " + adresse);
-        System.out.println();
     }
 
     // Getters
