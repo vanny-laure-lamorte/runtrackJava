@@ -120,13 +120,12 @@ public class Commerciale {
         }
 
         // S'assurer que le client existe
-        if (client != null) {
-            commandes.add(new Commande(nouvelleNumeroCommande, nouvelleDateCommande, client));
-            System.out.println("Commande passée avec succès !");
-        } else {
+        if (client == null) {
             System.out.println("Client introuvable !");
+            return;
         }
 
+        
         // Calculer le coût total de la commande
         double coutTotal = article.getPrixUnitaire() * quantiteCommande;
 
@@ -149,6 +148,8 @@ public class Commerciale {
         // Ajouter la ligne de commande
         Ligne nouvelleLigne = new Ligne(nouvelleCommande, article, quantiteCommande);
         lignes.add(nouvelleLigne);
+
+        System.out.println("Commande passée avec succès !");
 
     }
 
