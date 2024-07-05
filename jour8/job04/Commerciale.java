@@ -56,15 +56,22 @@ public class Commerciale {
     // Méthode pour passer une commande
     public void passerCommande() {
 
-        System.out.println("--------------------\n" +
+        System.out.println(
+                "--------------------\n" +
                 "PASSER UNE COMMANDE \n" +
                 "--------------------\n");
+
+        // Afficher tous les noms de clients disponibles
+        for (Client client : clients) {
+            client.affiche();
+        }        
+                
+        System.out.print("> Identité du client: ");
+        int identiteClient = input.nextInt();
         System.out.print("> Numero de commande: ");
         int nouvelleNumeroCommande = input.nextInt();
         System.out.print("> Date de commande: ");
         int nouvelleDateCommande = input.nextInt();
-        System.out.print("> Identité du client: ");
-        int identiteClient = input.nextInt();
 
         // Trouver le client avec l'identité fournie
         Client client = null;
