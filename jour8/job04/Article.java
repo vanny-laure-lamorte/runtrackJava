@@ -37,7 +37,7 @@ public class Article {
         return designation;
     }
 
-    public double prixUnitaire() {
+    public double getPrixUnitaire() {
         return prixUnitaire;
     }
 

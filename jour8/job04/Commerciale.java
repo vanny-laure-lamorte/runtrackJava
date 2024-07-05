@@ -35,7 +35,7 @@ public class Commerciale {
         // Client
         Client client1 = new Client(1, "Lazlo Ltd", "1 rue du Nouvel An", 1002412.1995);
         clients.add(client1);
-        Client client2 = new Client(2, "Atlas Ltd", "19 av. Septembre", 1000101.2023);
+        Client client2 = new Client(2, "Atlas Ltd", "19 av. Septembre", 0);
         clients.add(client2);
 
         // Article
@@ -44,6 +44,7 @@ public class Commerciale {
         Article article2 = new Article(article1);
         article2.setReference(609);
         article2.setDesignation("Journal");
+        article2.setQuantiteStock(0);
         articles.add(article2);
 
         // Commande
@@ -58,14 +59,50 @@ public class Commerciale {
 
         System.out.println(
                 "--------------------\n" +
-                "PASSER UNE COMMANDE \n" +
-                "--------------------\n");
+                        "PASSER UNE COMMANDE \n" +
+                        "--------------------\n");
+
+        // ETAPE 1 : STOCK
+
+        // Afficher tous les articles disponibles
+        for (Article article : articles) {
+            article.affiche();
+        }
+
+        // Demander l'article et la quantité pour la commande
+        System.out.print("> Saisir la référence de l'article: ");
+        int refArticle = input.nextInt();
+        System.out.print("> Saisir la quantité à commander: ");
+        int quantiteCommande = input.nextInt();
+
+        // Trouver l'article avec la référence fournie
+        Article article = null;
+        for (Article a : articles) {
+            if (a.getReference() == refArticle) {
+                article = a;
+                break;
+            }
+        }
+
+        // S'assurer que l'article existe
+        if (article == null) {
+            System.out.println("Article introuvable !");
+            return;
+        }
+
+        // Vérifier la quantité de stock et le budget du client
+        if (article.getQuantiteStock() < quantiteCommande) {
+            System.out.println("Commande impossible. Quantité insuffisante en stock !");
+            return;
+        }
+
+        // ETAPE 2 : BUDGET
 
         // Afficher tous les noms de clients disponibles
         for (Client client : clients) {
             client.affiche();
-        }        
-                
+        }
+
         System.out.print("> Identité du client: ");
         int identiteClient = input.nextInt();
         System.out.print("> Numero de commande: ");
@@ -89,6 +126,30 @@ public class Commerciale {
         } else {
             System.out.println("Client introuvable !");
         }
+
+        // Calculer le coût total de la commande
+        double coutTotal = article.getPrixUnitaire() * quantiteCommande;
+
+        // Vérifier le budget du client
+        if (client.getChiffreAffaire() < coutTotal) {
+            System.out.println("Budget insuffisant !");
+            return;
+        }
+
+        // ETAPE 3 : CONFIRMATION DE LA COMMANDE
+
+        // Mettre à jour la quantité de stock de l'article et le budget du client
+        article.setQuantiteStock(article.getQuantiteStock() - quantiteCommande);
+        client.setChiffreAffaire(client.getChiffreAffaire() - coutTotal);
+
+        // Créer une nouvelle commande
+        Commande nouvelleCommande = new Commande(nouvelleNumeroCommande, nouvelleDateCommande, client);
+        commandes.add(nouvelleCommande);
+
+        // Ajouter la ligne de commande
+        Ligne nouvelleLigne = new Ligne(nouvelleCommande, article, quantiteCommande);
+        lignes.add(nouvelleLigne);
+
     }
 
     // Méthode pour annuler une commande
@@ -181,8 +242,8 @@ public class Commerciale {
     public void ajouterClient() {
 
         System.out.println("------------------\n" +
-        "AJOUTER UN CLIENT \n" +
-        "------------------\n"); 
+                "AJOUTER UN CLIENT \n" +
+                "------------------\n");
 
         System.out.print(" > Saisir votre identifiant : ");
         int ajoutIdentite = input.nextInt();
@@ -203,8 +264,8 @@ public class Commerciale {
     public void supprimerClient() {
 
         System.out.println("--------------------\n" +
-        "SUPPRIMER UN CLIENT \n" +
-        "--------------------\n");
+                "SUPPRIMER UN CLIENT \n" +
+                "--------------------\n");
 
         // Afficher tous les clients de la liste
         for (Client client : clients) {
@@ -278,20 +339,16 @@ public class Commerciale {
             // menu
             switch (userChoice) {
                 case 1:
-
                     ajouterArticle();
-
                     break;
                 case 2:
                     supprimerArticle();
-
                     break;
                 case 3:
                     ajouterClient();
                     break;
                 case 4:
                     supprimerClient();
-
                     break;
                 case 5:
                     passerCommande();
@@ -301,9 +358,7 @@ public class Commerciale {
                     break;
                 case 7:
                     System.out.println("A bientôt ! Fin du programme. \n");
-                    
                     break;
-
                 default:
                     System.out.println("Choix invalide. Veuillez entrer un nombre entre 1 et 7.");
             }
