@@ -149,7 +149,14 @@ public class Commerciale {
         Ligne nouvelleLigne = new Ligne(nouvelleCommande, article, quantiteCommande);
         lignes.add(nouvelleLigne);
 
-        System.out.println("Commande passée avec succès !");
+        // Afficher la recap
+          for (Ligne ligne : lignes) {
+            ligne.affiche();
+        }
+
+        System.out.println("Commande passée avec succès !");      
+
+
 
     }
 

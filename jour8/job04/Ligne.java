@@ -42,6 +42,7 @@ public class Ligne {
 
     // Méthode pour afficher les informations
     public void affiche(){
+        System.out.println();
         System.out.println("------------------------");
         System.out.println("   RAPPORT DE COMMANDE   ");
         System.out.println("------------------------");
